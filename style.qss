@@ -1,0 +1,187 @@
+
+/* ==================================
+   アプリ全体
+================================== */
+
+QWidget {
+    background-color: #F4EFE5;
+    color: #3B3028;
+    font-family: "Rounded Mplus 1c";
+}
+
+
+/* ==================================
+   入力欄
+================================== */
+
+QLineEdit {
+    background-color: #FFF8EC;
+    color: #3B3028;
+    border: 1px solid #AD9065;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+/* ==================================
+   ボタン共通
+================================== */
+
+QPushButton {
+    min-height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 8px 20px;
+}
+
+
+/* ==================================
+   タイトル・サブタイトル
+================================== */
+
+QLabel#title {
+    color: #B22222;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+QLabel#subtitle {
+    color: #216D5E;
+    font-size: 13px;
+}
+
+
+/* ==================================
+   参加人数表示ボタン
+================================== */
+
+QPushButton#participant_count {
+    background-color: #216D5E;
+    color: #FFF8EC;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #AD9065;
+    border-radius: 12px;
+
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 65px;
+    max-height: 65px;
+
+    padding: 10px 18px;
+}
+
+QPushButton#participant_count:hover {
+    background-color: #2D8875;
+}
+
+QPushButton#participant_count:pressed {
+    background-color: #174D43;
+}
+
+
+/* ==================================
+   抽選開始ボタン
+================================== */
+
+QPushButton#next_button {
+    background-color: #B22222;
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #AD9065;
+    border-radius: 10px;
+
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 65px;
+    max-height: 65px;
+
+    padding: 10px 18px;
+}
+
+QPushButton#next_button:hover {
+    background-color: #8B1A1A;
+}
+
+QPushButton#next_button:pressed {
+    background-color: #641313;
+}
+
+
+/* ==================================
+   フッター
+================================== */
+
+QLabel#footer {
+    color: #AD9065;
+    font-size: 12px;
+}
+
+
+/* ==================================
+   参加者一覧
+================================== */
+
+QListWidget#participant_list {
+    background-color: #F4EFE5;
+    color: #3B3028;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+QListWidget#participant_list::item {
+    background-color: #FFF8EC;
+    border: 1px solid #AD9065;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+QListWidget#participant_list::item:hover {
+    background-color: #E8DCC7;
+}
+
+QListWidget#participant_list::item:selected {
+    background-color: #216D5E;
+    color: #FFFFFF;
+}
+
+
+/* ==================================
+   抽選結果
+================================== */
+
+QLabel#result_label {
+    font-size: 36px;
+    font-weight: bold;
+    color: #B22222;
+    padding: 30px 10px;
+}
+/* 抽選結果画面タイトル */
+QLabel#result_title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #B22222;
+}
+
+/* ペア一覧タイトル */
+QLabel#pair_list_title {
+    color: #216D5E;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ペア一覧の各項目 */
+/* ペアの名前 */
+QLabel#pair_name {
+    background-color: transparent;
+    color: #3B3028;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    padding: 0px;
+}
