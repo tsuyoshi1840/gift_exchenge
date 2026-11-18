@@ -30,6 +30,9 @@ jobs:
 
     env:
       SIGNING_ENABLED: ${{ vars.SIGNPATH_ENABLED == 'true' }}
+      # Windows ランナーの標準文字コードは cp1252 なので、日本語の print で落ちないよう UTF-8 にする
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: utf-8
 
     steps:
       - name: ソースを取得
