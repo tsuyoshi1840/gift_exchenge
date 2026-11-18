@@ -30,7 +30,7 @@ import os
 from pathlib import Path
 
 APP_NAME = "Gift Exchange"
-APP_VERSION = "1.26.11.2"
+APP_VERSION = "1.26.11.3"
 # =================================
 # データ保存先の設定
 # =================================
