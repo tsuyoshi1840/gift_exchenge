@@ -1,0 +1,4 @@
+# ビルドに使うライブラリ（バージョン固定）
+# 使い方: pip install -r requirements.txt
+pyside6==6.12.0
+pyinstaller==6.22.3
