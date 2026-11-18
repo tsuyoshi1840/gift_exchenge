@@ -29,9 +29,11 @@ class ParticipantListForm(QDialog):
 
         # タイトル
         title = QLabel("参加者管理")
+        title.setObjectName("dialog_title")
 
         # 登録人数
         self.count_label = QLabel()
+        self.count_label.setObjectName("dialog_count")
 
         # 名前入力欄と追加ボタン
         input_layout = QHBoxLayout()
@@ -40,6 +42,7 @@ class ParticipantListForm(QDialog):
         self.name_input.setPlaceholderText("名前を入力してください")
 
         self.button_add = QPushButton("追加")
+        self.button_add.setObjectName("primary_button")
 
         input_layout.addWidget(self.name_input)
         input_layout.addWidget(self.button_add)
@@ -83,6 +86,11 @@ class ParticipantListForm(QDialog):
         layout.addWidget(self.count_label)
         layout.addLayout(input_layout)
         layout.addWidget(self.participant_list)
+
+        # 操作のヒント
+        hint = QLabel("名前をクリックすると、変更・削除ができます")
+        hint.setObjectName("hint")
+        layout.addWidget(hint)
 
         self.setLayout(layout)
 

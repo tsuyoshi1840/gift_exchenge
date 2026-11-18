@@ -5,8 +5,12 @@ from random_generator import create_generator
 from result_form import ResultForm
 import sys
 import json
+import secrets
 from pathlib import Path
 from participant_edit_form import ParticipantEditForm
+from image_button import ImageButton
+from app_paths import resource_path
+from snow import SnowBackground
 
 from PySide6.QtWidgets import (
     QApplication,
@@ -14,7 +18,8 @@ from PySide6.QtWidgets import (
     QLabel,
     QPushButton,
     QVBoxLayout,
-    QListWidget
+    QListWidget,
+    QMessageBox
 )
 from PySide6.QtCore import Qt
 
@@ -138,37 +143,30 @@ def open_participant_edit_form(index):
 # ==================================
 # アプリ起動
 # ==================================
-if getattr(sys, "frozen", False):
-    BASE_DIR = Path(sys._MEIPASS)
-else:
-    BASE_DIR = Path(__file__).resolve().parent
+# 素材の場所は app_paths.py の resource_path() で解決する
+# （EXEのときは sys._MEIPASS、Pythonで動かすときはこのフォルダ）
 app = QApplication(sys.argv)
 
-icon_path = BASE_DIR / "assets" / "images" / "icon_image.ico"
+icon_path = resource_path("assets", "images", "icon_image.ico")
 app.setWindowIcon(QIcon(str(icon_path)))
 
-# フォント読み込み
-font_path = Path(__file__).parent / "assets" / "fonts" / "MPLUSRounded1c-Regular.ttf"
+# フォント読み込み（Regular / Medium / Bold）
+for font_file in [
+    "MPLUSRounded1c-Regular.ttf",
+    "MPLUSRounded1c-Medium.ttf",
+    "MPLUSRounded1c-Bold.ttf",
+]:
+    font_path = resource_path("assets", "fonts", font_file)
+    font_id = QFontDatabase.addApplicationFont(str(font_path))
 
-font_id = QFontDatabase.addApplicationFont(str(font_path))
-
-if font_id == -1:
-    print("フォントの読み込みに失敗しました")
+    if font_id == -1:
+        print("フォントの読み込みに失敗しました:", font_file)
 # font-family: "Rounded Mplus 1c";名前を解決するときに使った
 # else:
 #     print(QFontDatabase.applicationFontFamilies(font_id))
+
 # QSS読み込み
-style_path = Path(__file__).parent / "style.qss"
-
-import sys
-from pathlib import Path
-
-if getattr(sys, "frozen", False):
-    base_dir = Path(sys._MEIPASS)
-else:
-    base_dir = Path(__file__).resolve().parent
-
-qss_path = base_dir / "style.qss"
+qss_path = resource_path("style.qss")
 
 with open(qss_path, "r", encoding="utf-8") as file:
     app.setStyleSheet(file.read())
@@ -197,7 +195,7 @@ title = QLabel("Gift抽選 だよ")
 title.setObjectName("title")
 title.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-subtitle = QLabel("test text")
+subtitle = QLabel("プレゼント交換のペアを決めよう")
 subtitle.setObjectName("subtitle")
 subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -210,7 +208,8 @@ layout.addWidget(subtitle)
 # ==================================
 
 # 参加人数表示
-count = QPushButton("参加予定人数　0 人")
+# 背景画像：assets/images/buttons/participant_count.png（または .gif）
+count = ImageButton("参加予定人数　0 人", "participant_count")
 count.setObjectName("participant_count")
 
 
@@ -222,7 +221,8 @@ layout.addWidget(count, alignment=Qt.AlignmentFlag.AlignHCenter)
 # button_register = QPushButton("参加者を登録する")
 # button_register.setObjectName("register_button")
 # button_lottery.setObjectName("lottery_button")
-button_lottery = QPushButton("抽選をはじめる")
+# 背景画像：assets/images/buttons/lottery_button.png（または .gif）
+button_lottery = ImageButton("抽選をはじめる", "lottery_button")
 button_lottery.setObjectName("next_button")
 
 
@@ -293,14 +293,22 @@ def open_participant_form():
 def open_result_form():
 
     try:
-        generator = create_generator(12345)
+        # 抽選のたびにランダムなシード値（32ビット）を作る
+        seed = secrets.randbits(32)
+        generator = create_generator(seed)
         pairs = create_pairs(participants, generator)
 
-        result_form = ResultForm(pairs, window)
-        result_form.exec()
-
     except ValueError as error:
-        print(error)
+        # 人数が奇数・2人未満のときは画面にメッセージを出す
+        QMessageBox.warning(
+            window,
+            "抽選できません",
+            f"{error}\n（現在の登録人数：{len(participants)} 人）"
+        )
+        return
+
+    result_form = ResultForm(pairs, window)
+    result_form.exec()
 
 # ==================================
 # Signalの接続
@@ -346,6 +354,10 @@ update_participant_display()
 # ==================================
 
 window.setLayout(layout)
+
+# 背景に雪を降らせる（いちばん後ろに表示される）
+snow = SnowBackground(window)
+
 window.show()
 
 sys.exit(app.exec())

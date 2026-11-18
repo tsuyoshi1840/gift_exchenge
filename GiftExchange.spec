@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('style.qss', '.')],
+    datas=[('style.qss', '.'), ('assets', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -33,6 +33,7 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon=['assets/images/icon_image.ico'],
+    version='version_info.txt',
 )
 coll = COLLECT(
     exe,

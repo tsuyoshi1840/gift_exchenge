@@ -11,6 +11,16 @@ QWidget {
 
 
 /* ==================================
+   背景の雪が見えるように、文字や枠は背景を透明にする
+================================== */
+
+QLabel,
+QWidget#settings_area {
+    background-color: transparent;
+}
+
+
+/* ==================================
    入力欄
 ================================== */
 
@@ -34,6 +44,59 @@ QPushButton {
     font-weight: bold;
     border-radius: 10px;
     padding: 8px 20px;
+
+    /* 色指定のないボタン（ダイアログのOKなど）もアプリの配色に合わせる */
+    background-color: #FFF8EC;
+    color: #3B3028;
+    border: 2px solid #AD9065;
+}
+
+QPushButton:hover {
+    background-color: #E8DCC7;
+}
+
+QPushButton:pressed {
+    background-color: #D8C7A8;
+}
+
+QPushButton:disabled {
+    color: #B9AB98;
+    border-color: #D8C7A8;
+}
+
+
+/* 追加・変更など、メインの操作（緑） */
+QPushButton#primary_button {
+    background-color: #216D5E;
+    color: #FFF8EC;
+}
+
+QPushButton#primary_button:hover {
+    background-color: #2D8875;
+}
+
+QPushButton#primary_button:pressed {
+    background-color: #174D43;
+}
+
+/* 削除（赤枠） */
+QPushButton#danger_button {
+    background-color: #FFF8EC;
+    color: #B22222;
+    border: 2px solid #B22222;
+}
+
+QPushButton#danger_button:hover {
+    background-color: #F6DCD6;
+}
+
+/* 結果画面右上の小さいボタン（全画面・設定） */
+QPushButton#tool_button {
+    min-height: 32px;
+    font-size: 14px;
+    padding: 4px 14px;
+    border: 1px solid #AD9065;
+    border-radius: 8px;
 }
 
 
@@ -110,6 +173,13 @@ QPushButton#next_button:pressed {
     background-color: #641313;
 }
 
+/* 抽選中・抽選完了で押せないとき */
+QPushButton#next_button:disabled {
+    background-color: #C9A9A0;
+    color: #FFF8EC;
+    border-color: #D8C7A8;
+}
+
 
 /* ==================================
    フッター
@@ -156,7 +226,7 @@ QListWidget#participant_list::item:selected {
 ================================== */
 
 QLabel#result_label {
-    font-size: 36px;
+    font-size: 54px;
     font-weight: bold;
     color: #B22222;
     padding: 30px 10px;
@@ -178,10 +248,61 @@ QLabel#pair_list_title {
 /* ペア一覧の各項目 */
 /* ペアの名前 */
 QLabel#pair_name {
-    background-color: transparent;
+    background-color: #FFF8EC;
     color: #3B3028;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
+    border: 1px solid #AD9065;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 6px;
+}
+
+/* ペア一覧のスクロール枠 */
+QScrollArea#pair_scroll {
     border: none;
-    padding: 0px;
+    background-color: transparent;
+}
+
+QScrollArea#pair_scroll QWidget#qt_scrollarea_viewport {
+    background-color: transparent;
+}
+
+QWidget#pair_list {
+    background-color: transparent;
+}
+
+/* 抽選演出時間の設定 */
+QLabel#settings_label {
+    font-size: 14px;
+}
+
+QSpinBox {
+    background-color: #FFF8EC;
+    border: 1px solid #AD9065;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 16px;
+}
+
+
+/* ==================================
+   参加者管理・編集ダイアログ
+================================== */
+
+QLabel#dialog_title {
+    color: #B22222;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+QLabel#dialog_count {
+    color: #216D5E;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QLabel#hint {
+    color: #AD9065;
+    font-size: 12px;
 }

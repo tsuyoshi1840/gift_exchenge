@@ -5,7 +5,8 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QVBoxLayout,
-    QHBoxLayout
+    QHBoxLayout,
+    QMessageBox
 )
 from PySide6.QtCore import Qt, Signal
 
@@ -28,6 +29,7 @@ class ParticipantEditForm(QDialog):
 
         # タイトル
         title = QLabel("参加者編集")
+        title.setObjectName("dialog_title")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # 名前入力欄
@@ -39,6 +41,8 @@ class ParticipantEditForm(QDialog):
 
         self.button_update = QPushButton("変更する")
         self.button_delete = QPushButton("削除する")
+        self.button_update.setObjectName("primary_button")
+        self.button_delete.setObjectName("danger_button")
 
         button_layout.addWidget(self.button_update)
         button_layout.addWidget(self.button_delete)
@@ -65,5 +69,16 @@ class ParticipantEditForm(QDialog):
 
     # 削除の通知
     def delete_participant(self):
+
+        # 誤操作防止のため確認する
+        answer = QMessageBox.question(
+            self,
+            "削除の確認",
+            f"「{self.name_input.text()}」さんを削除しますか？"
+        )
+
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+
         self.participant_deleted.emit()
         self.accept()
